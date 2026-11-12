@@ -2,6 +2,14 @@
   command = "npm run build"
   publish = "dist"
 
+[build.environment]
+  # These values are intentionally public or non-sensitive config:
+  # - VITE_SUPABASE_* are inlined into the browser bundle by Vite (publishable key + project URL).
+  # - PORT and WHATSAPP_MODE are plain config values that also appear in docs/source.
+  # Real secrets (RAZORPAY_KEY_SECRET, RAZORPAY_WEBHOOK_SECRET, SUPABASE_SECRET_KEY, RAZORPAY_KEY_ID)
+  # are still scanned and must never be referenced from frontend code.
+  SECRETS_SCAN_OMIT_KEYS = "VITE_SUPABASE_URL,VITE_SUPABASE_PUBLISHABLE_KEY,PORT,WHATSAPP_MODE"
+
 [[headers]]
   for = "/*"
   [headers.values]
